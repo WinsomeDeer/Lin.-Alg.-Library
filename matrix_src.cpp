@@ -90,3 +90,39 @@ template<class T>
             }
         }
     }
+
+template<class T>
+    double Matrix<T>::det(){
+            // Check if the matrix is square or not.
+            double ratio, determinant;
+            Matrix<T> tmp = *this;
+            if(tmp.m != tmp.n){
+                throw std::invalid_argument("Matrix is not square.");
+            }
+            // Put matrix in R.E form.
+            for(int i = 0; i < tmp.m - 1; i++){
+                for(int j = tmp.m - 1, j > i, j--){
+                    if(tmp[j][i] == 0){
+                        continue;
+                    }
+                    else{
+                        try{
+                            ratio = tmp[j][i]/tmp[j-1][i];
+                            for(int k = 0; k < this -> m; k++){
+                                swap(tmp[j][k], tmp[j-1][k])
+                            }
+                        }
+                        continue;
+                    }
+                    for(int l = 0; l < this -> m; l++){
+                        tmp[j][l] = tmp[j][l] - ratio*tmp[j-1][k];
+                    }
+                }
+            }
+            // Multiply the entries on the trace diagonal.
+            determinant = tmp[0][0];
+            for(int i = 1, j = 1; i, j < tmp.m; i++, j++){
+                determinant *= tmp[i][j];
+            }
+            return determinant;
+    }
